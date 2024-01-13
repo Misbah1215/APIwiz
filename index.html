@@ -1,127 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"; width: device-width, initial-=1.0>
-    <title>Text Analyzer</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+import React, { useState } from 'react';
+import axios from 'axios';
+import './App.css';
+import { baseurl } from './const';
 
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
+function App() {
+  const [word, setWord] = useState('');
+  const [characterCount, setCharacterCount] = useState(0);
+  const [wordCount, setWordCount] = useState(0);
+  const [definition, setDefinition] = useState('');
+  const [partOfSpeech, setPartOfSpeech] = useState('');
+  const [synonyms, setSynonyms] = useState([]);
+  const [antonyms, setAntonyms] = useState([]);
 
-        textarea {
-            width: 100%;
-            min-height: 200px;
-            padding: 0.5rem;
-            font-size: 1rem;
-            resize: vertical;
-        }
+  const handleProcessWord = async () => {
+    try {
+      const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+      console.log(JSON.stringify(response.data));
+      console.log(baseurl);
 
-        .stats {
-            margin-top: 2rem;
-            border-top: 1px solid #ccc;
-            padding-top: 1rem;
-        }
+      // Update state with relevant data from the API response
+      setDefinition(response.data[0]?.meanings[0]?.definitions[0]?.definition || '');
+      setPartOfSpeech(response.data[0]?.meanings[0]?.partOfSpeech || '');
+      setSynonyms(response.data[0]?.meanings[0]?.definitions[0]?.synonyms || []);
+      setAntonyms(response.data[0]?.meanings[0]?.definitions[0]?.antonyms || []);
+    } catch (error) {
+      console.error(error);
+    }
 
-        .stats p {
-            margin-bottom: 0.25rem;
-        }
+    // Calculate character and word count
+    setCharacterCount(word.length);
+    setWordCount(word.split(/\s+/).filter((word) => word !== '').length);
+  };
 
-        .stats strong {
-            font-size: 0.8rem;
-            display: inline-block;
-            width: 80px;
-        }
+  return (
+    <div className="App">
+      <h1>Text Analyzer</h1>
+      <p className='m1'>Text Analyzer is a simple free online tool for SEO web content analysis that helps
+        you find most frequent phrases and words, the number of characters, words, sentences and paragraphs,
+        and the estimated read and speak time of your content.</p>
+      <div>
+        <button className='m2'>Word Input</button>
+        <button className='m2'>Paragraph</button>
+      </div>
 
-        .definition {
-            margin-top: 1rem;
-            border-top: 1px solid #ccc;
-            padding-top: 1rem;
-        }
-
-        .definition h2 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .definition p {
-            margin-bottom: 0.25rem;
-        }
-
-        .definition ul {
-            padding-left: 1.5rem;
-        }
-
-        .definition li {
-            margin-bottom: 0.25rem;
-        }
-    </style>
-</head>
-<body>
-    <div>
-        <h1>Text Analyzer</h1>
-        <p>Text Analyzer is a simple free online tool for SEO web content analysis that helps you find most frequent phrases and words, number of characters, words, sentences and paragraphs, and estimated read and speak time of your content.</p>
-        <textarea id="content" placeholder="Type, or copy/paste your content here."></textarea>
-        <div class="stats">
-            <p><strong>Characters:</strong> <span id="characters">0</span></p>
-            <p><strong>Words:</strong> <span id="words">0</span></p>
-            <p><strong>Paragraphs:</strong> <span id="paragraphs">0</span></p>
-            <p><strong>Sentences:</strong> <span id="sentences">0</span></p>
-            <p><strong>Spaces:</strong> <span id="spaces">0</span></p>
-            <p><strong>Punctuations:</strong> <span id="punctuations">0</span></p>
+      <div style={{ display: "flex", marginTop: 15, width: "100%" }} >
+        <div style={{ width: "80%", display: "flex", alignItems: "center", justifyContent: "space-between", }} >
+          <textarea value={word} onChange={(e) => setWord(e.target.value)} id="w3review" name="w3review" rows="1" style={{ width: "90%", padding: "0.5%", overflow: "hidden" }} ></textarea>
+          <div className='m6'> <button onClick={handleProcessWord}>Process Word</button></div>
         </div>
-        <div class="definition">
-            <h2>Urban</h2>
-            <p>Characters: 5</p>
-            <p>Word Input</p>
-            <p>Words: 1</p>
-            <p>Defination: <span>Part of speech: Noun</span></p>
-            <ul>
-                <li>Synonyms: Town</li>
-                <li>Antonyms: Rural</li>
-            </ul>
-            <p>1 Paragraph</p>
-            <p>in, relating to, or characteristic of a town or city.</p>
-            <p>"the urban population"</p>
-            <p>Process Word</p>
-        </div>
+      </div>
+
+      <div>
+        <table style={{ margin: "10px" }}>
+          <thead>
+            <tr>
+              <th className='m3'>Characters</th>
+              <th className='m4'>Words</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{characterCount}</td>
+              <td>{wordCount}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div className='m5'>
+        <p>Definition: {definition}</p>
+        <p>Part of speech: {partOfSpeech}</p>
+        <p>Synonyms: {synonyms.join(', ')}</p>
+        <p>Antonyms: {antonyms.join(', ')}</p>
+      </div>
     </div>
+  );
+}
 
-    <script>
-        // JavaScript code for counting characters, words, etc.
-        const content = document.getElementById("content");
-        const characterCount = document.getElementById("characters");
-        const wordCount = document.getElementById("words");
-        const paragraphCount = document.getElementById("paragraphs");
-        const sentenceCount = document.getElementById("sentences");
-        const spaceCount = document.getElementById("spaces");
-        const punctuationCount = document.getElementById("punctuations");
-
-        content.addEventListener("input", () => {
-            const text = content.value;
-            const charCount = text.length;
-            const wordArr = text.trim().split(/\s+/);
-            const wordCountVal = wordArr.filter(word => word.length > 0).length;
-            const paragraphCountVal = text.match(/[^\r\n]+/g) || [];
-            const sentenceCountVal = text.match(/[^.!?]+[.!?]+/g) || [];
-            const spaceCountVal = wordArr.length - 1;
-            const punctuationCountVal = text.match(/[.,!?;]/g) || [];
-
-            characterCount.textContent = charCount;
-            wordCount.textContent = wordCountVal;
-            paragraphCount.textContent = paragraphCountVal.length;
-            sentenceCount.textContent = sentenceCountVal.length;
-            spaceCount.textContent = spaceCountVal;
-            punctuationCount.textContent = punctuationCountVal.length;
-        });
+export default App;
     </script>
 </body>
 </html>
