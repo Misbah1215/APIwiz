@@ -1,0 +1,1 @@
+export const baseurl = 'https://wordsapiv1.p.rapidapi.com/words/hatchback/typeOf' 
