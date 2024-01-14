@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Text Analyzer</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			background-color: #f0f0f0;
+		}
+		.container {
+			width: 80%;
+			margin: 0 auto;
+			padding: 20px;
+		}
+		.header {
+			background-color: #333;
+			color: #fff;
+			padding: 20px;
+			text-align: center;
+		}
+		.input-area {
+			margin: 20px 0;
+		}
+		textarea {
+			width: 100%;
+			height: 200px;
+			padding: 10px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+		.analysis-area {
+			background-color: #fff;
+			padding: 20px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			margin-top: 20px;
+		}
+		.analysis-title {
+			font-size: 20px;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+		.analysis-data {
+			margin-bottom: 10px;
+		}
+		.analysis-data span {
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<h1>Text Analyzer</h1>
+		</div>
+		<div class="input-area">
+			<textarea id="textArea"></textarea>
+		</div>
+		<div class="analysis-area">
+			<div class="analysis-title">Analysis Results:</div>
+			<div class="analysis-data">
+				<span>Number of characters:</span> <span id="charCount">0</span>
+			</div>
+			<div class="analysis-data">
+				<span>Number of words:</span> <span id="wordCount">0</span>
+			</div>
+			<div class="analysis-data">
+				<span>Number of sentences:</span> <span id="sentenceCount">0</span>
+			</div>
+			<div class="analysis-data">
+				<span>Number of paragraphs:</span> <span id="paragraphCount">0</span>
+			</div>
+			<div class="analysis-data">
+				<span>Estimated read time:</span> <span id="readTime">0</span> seconds
+			</div>
+			<div class="analysis-data">
+				<span>Estimated speak time:</span> <span id="speakTime">0</span> seconds
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const textArea = document.getElementById("textArea");
+		const charCount = document.getElementById("charCount");
+		const wordCount = document.getElementById("wordCount");
+		const sentenceCount = document.getElementById("sentenceCount");
+		const paragraphCount = document.getElementById("paragraphCount");
+		const readTime = document.getElementById("readTime");
+		const speakTime = document.getElementById("speakTime");
+
+		textArea.addEventListener("input", () => {
+			const text = textArea.value;
+			const words = text.trim().split(/\s+/);
+			const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
+			const paragraphs = text.match(/[^\r\n]+(\r\n|\n)/g) || [];
+
+			charCount.textContent = text.length;
+			wordCount.textContent = words.length;
+			sentenceCount.textContent = sentences.length;
+			paragraphCount.textContent = paragraphs.length;
+
+			const wordsPerMinute = 200;
+			const readWords = words.filter(word => word.length > 0).length;
+			readTime.textContent = Math.ceil(readWords / wordsPerMinute);
+
+			const speakWords = words.filter(word => word.length > 0).length;
+			speakTime.textContent = Math.ceil(speakWords * 0.008);
+		});
+	</script>
+</body>
+</html>
