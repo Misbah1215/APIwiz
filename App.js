@@ -1,90 +1,6 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import './App.css';
-// import { baseurl } from './const';
-// function App() {
-//   const [data,setData] = useState();
-//   const [searchvalue , setSearchValue] = useState('')
-//   var Word = null;
+// the output for the following screen is available in the repository whose link is:"https://github.com/Misbah1215/APIwiz/blob/main/image.png"
 
 
-
-    
-//   // try {
-//   //   const response = await axios.request(options);
-//   //   console.log(response.data);
-//   // } catch (error) {
-//   //   console.error(error);
-//   // }
-
-//   // const axios = require('axios');
-
-// let config = {
-//   method: 'get',
-//   maxBodyLength: Infinity,
-//   url: `https://api.dictionaryapi.dev/api/v2/entries/en/${Word}`,
-//   headers: { }
-// };
-
-// axios.request(config)
-// .then((response) => {
-//   console.log(JSON.stringify(response.data));
-// })
-// .catch((error) => {
-//   console.log(error);
-// });
-
-//   return (
-//     <div className="App">
-//       <h1>Text Analyzer</h1>
-//       <p className='m1'>Text Analyzer is a simple free online tool for SEO web content analysis that helps
-//          you find most frequent phrases and words, number of characters, words, sentences and paragraphs, 
-//          and estimated read and speak time of your content.</p>
-//       <div>
-//         <button className='m2'>Word Input</button>   
-//         <button className='m2'>Paragraph</button>
-//       </div>
-    
-//     <div style={{display : "flex" , marginTop:15, width : "100%" }} >
-//         <div style={{ width : "80%" , display : "flex" , alignItem : "center"  , justifyContent : "space-between" ,}} >
-//           <textarea value={Word} id="w3review" name="w3review" rows="1" style={{width : "90%" , padding : "0.5%"}} >
-//           </textarea>
-//           <div className='m6'> <button>Process Word</button></div>
-//         </div>
-//     </div>
-
-//     <div>
-//       <table style={{margin : "10px"}}>
-//         <thead>
-//         <tr>
-//         <th className='m3'>
-//          Characters
-//         </th>
-//         <th className='m4'>Words</th>
-//         </tr>
-//         </thead>
-//         <tbody>
-//         <tr>
-//           <td>5</td>
-//           <td>1</td>
-//         </tr>
-//         </tbody>
-//         </table>
-//     </div>
-
-//     <div className='m5'>
-//       <text>Defination : </text>
-//       <text>Part of speech :</text>
-//       <text>Synonyms :</text>
-//       <text>Antonyms :</text>
-//     </div>
-
-  
-//     </div>
-//   );
-// }
-
-// export default App;
 import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
@@ -165,4 +81,6 @@ function App() {
 }
 
 export default App;
+
+// the output for the following screen is available in the repository whose link is:"https://github.com/Misbah1215/APIwiz/blob/main/image.png"
 
